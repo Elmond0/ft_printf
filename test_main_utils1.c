@@ -1,25 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putaddr.c                                       :+:      :+:    :+:   */
+/*   test_main_utils1.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elmondo <elmondo@student.42firenze.it>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/26 00:00:00 by elmondo           #+#    #+#             */
-/*   Updated: 2026/08/26 18:06:43 by elmondo          ###   ########.fr       */
+/*   Updated: 2026/08/26 00:00:00 by elmondo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+#include "test_main.h"
+#include <stdio.h>
 
-int	ft_putaddr(void *addr)
+void	test_char(void)
 {
-	int	i;
+	int	r1;
+	int	r2;
 
-	i = 0;
-	if (!addr)
-		return (ft_putstr("(nil)"));
-	i += ft_putstr("0x");
-	i += ft_puthex((unsigned long)addr, 'x');
-	return (i);
+	r1 = ft_printf("ft : [%c]\n", 'A');
+	r2 = printf("std: [%c]\n", 'A');
+	ft_printf("ret -> ft: %d | std: %d\n\n", r1, r2);
+}
+
+void	test_str(void)
+{
+	int	r1;
+	int	r2;
+
+	r1 = ft_printf("ft : [%s]\n", "hello 42");
+	r2 = printf("std: [%s]\n", "hello 42");
+	ft_printf("ret -> ft: %d | std: %d\n\n", r1, r2);
+	r1 = ft_printf("ft : [%s]\n", (char *)0);
+	r2 = printf("std: [%s]\n", "(null)");
+	ft_printf("ret -> ft: %d | std: %d\n\n", r1, r2);
 }

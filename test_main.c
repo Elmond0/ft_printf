@@ -1,25 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putaddr.c                                       :+:      :+:    :+:   */
+/*   test_main.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elmondo <elmondo@student.42firenze.it>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/26 00:00:00 by elmondo           #+#    #+#             */
-/*   Updated: 2026/08/26 18:06:43 by elmondo          ###   ########.fr       */
+/*   Updated: 2026/08/26 00:00:00 by elmondo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+#include "test_main.h"
 
-int	ft_putaddr(void *addr)
+int	main(void)
 {
-	int	i;
-
-	i = 0;
-	if (!addr)
-		return (ft_putstr("(nil)"));
-	i += ft_putstr("0x");
-	i += ft_puthex((unsigned long)addr, 'x');
-	return (i);
+	ft_printf("=== %%c ===\n");
+	test_char();
+	ft_printf("=== %%s ===\n");
+	test_str();
+	ft_printf("=== %%d / %%i ===\n");
+	test_int();
+	ft_printf("=== %%u / %%x / %%X ===\n");
+	test_uint_hex();
+	ft_printf("=== %%p / %%%% ===\n");
+	test_ptr_percent();
+	return (0);
 }

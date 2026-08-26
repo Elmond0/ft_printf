@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: elmondo <elmondo@student.42firenze.it>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/08/26 00:00:00 by elmondo           #+#    #+#             */
+/*   Updated: 2026/08/26 18:06:43 by elmondo          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 
 static int	print_type(const int c, va_list argp)
@@ -21,9 +33,9 @@ static int	print_type(const int c, va_list argp)
 
 int	ft_printf(const char *format, ...)
 {
-	int	i;
-	va_list argp;
-	
+	int		i;
+	va_list	argp;
+
 	i = 0;
 	va_start(argp, format);
 	while (*format)
