@@ -48,7 +48,7 @@ Every conversion returns the **exact number of characters printed**, mirroring t
 
 ### Build the library
 
-The project ships with a `Makefile` that compiles every source file with strict warnings and archives the result into a static library.
+The project ships with a `Makefile` that compiles every source file with strict warnings and archives the result into a static library. It only builds the library — no test artifacts ever touch the project root.
 
 ```bash
 make        # compiles ft_printf.c and all helpers, builds libftprintf.a
@@ -95,11 +95,20 @@ Correctness was validated on two fronts: a **self-written differential test suit
 
 ### 1. Differential testing against libc
 
-The repo includes a small test program that calls `ft_printf` and `printf` side by side on every conversion, and checks that both the **output** and the **return value** match exactly.
+All test sources live in **[`tests/`](tests/)**, with their own dedicated `Makefile` — kept fully separate from the library so the project root stays clean and `ft_printf`'s own `Makefile` only ever builds `libftprintf.a`. The suite calls `ft_printf` and `printf` side by side on every conversion, and checks that both the **output** and the **return value** match exactly.
 
 ```bash
-gcc -Wall -Wextra -Werror test_main.c test_main_utils1.c test_main_utils2.c -L. -lftprintf -o test_printf
-./test_printf
+cd tests
+make run    # builds libftprintf.a (if needed), compiles the suite, and runs it
+```
+
+Other targets available inside `tests/`:
+
+```bash
+make        # just builds the test_printf binary
+make clean  # removes tests/*.o
+make fclean # removes tests/*.o and the test_printf binary
+make re     # fclean + make, full rebuild of the test suite
 ```
 
 Every line is checked for:
@@ -125,15 +134,21 @@ cd printfTester
 
 ```
 ft_printf/
-├── ft_printf.c       # Core parser: reads the format string, dispatches by specifier
-├── ft_putchar.c       # %c — single character
-├── ft_putstr.c        # %s — strings (NULL-safe)
-├── ft_putnbr.c         # %d / %i — signed integers
-├── ft_putunbr.c        # %u — unsigned integers
-├── ft_puthex.c        # %x / %X — hexadecimal
-├── ft_putaddr.c        # %p — pointer addresses (NULL-safe)
-├── ft_printf.h         # Public API + prototypes
-└── Makefile             # Build rules for libftprintf.a
+├── ft_printf.c              # Core parser: reads the format string, dispatches by specifier
+├── ft_putchar.c             # %c — single character
+├── ft_putstr.c              # %s — strings (NULL-safe)
+├── ft_putnbr.c              # %d / %i — signed integers
+├── ft_putunbr.c             # %u — unsigned integers
+├── ft_puthex.c              # %x / %X — hexadecimal
+├── ft_putaddr.c             # %p — pointer addresses (NULL-safe)
+├── ft_printf.h              # Public API + prototypes
+├── tests/                   # Differential test suite, fully self-contained
+│   ├── test_main.c
+│   ├── test_main.h
+│   ├── test_main_utils1.c
+│   ├── test_main_utils2.c
+│   └── Makefile             # Builds & runs the test suite (calls ../Makefile for the lib)
+└── Makefile                 # Build rules for libftprintf.a only
 ```
 
 ---
