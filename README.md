@@ -1,4 +1,4 @@
-# ft_printf <img height="28" src="https://raw.githubusercontent.com/ayogun/42-project-badges/main/badges/ft_printfe.png" alt="ft_printf badge"/>
+# <img height="35" src="https://raw.githubusercontent.com/ayogun/42-project-badges/main/badges/ft_printfe.png" alt="ft_printf badge" ft_printf/>
 
 ## <a href="https://profile.intra.42.fr/users/elmondo"><img align="middle" height="42" src="https://raw.githubusercontent.com/Elmond0/Elmond0/main/profile/icon42.svg" alt="42"/></a> &nbsp;Common Core Projects
 ![Norm](https://img.shields.io/badge/Norminette-passing-brightgreen)
