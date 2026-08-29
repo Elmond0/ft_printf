@@ -1,4 +1,4 @@
-# <img align="middle" height="115" src="https://raw.githubusercontent.com/ayogun/42-project-badges/main/badges/ft_printfe.png" alt="ft_printf badge"/> ft_printf
+# <img align="middle" height="115" src="https://raw.githubusercontent.com/ayogun/42-project-badges/main/badges/ft_printfe.png" alt="ft_printf badge"/> ft_printf &nbsp; [![Score](https://img.shields.io/badge/Score-100%2F100-brightgreen)](https://projects.intra.42.fr/projects/42cursus-ft_printf)
 
 ![Norm](https://img.shields.io/badge/Norminette-passing-brightgreen)
 ![Language](https://img.shields.io/badge/language-C-blue)
@@ -100,15 +100,6 @@ All test sources live in **[`tests/`](tests/)**, with their own dedicated `Makef
 ```bash
 cd tests
 make run    # builds libftprintf.a (if needed), compiles the suite, and runs it
-```
-
-Other targets available inside `tests/`:
-
-```bash
-make        # just builds the test_printf binary
-make clean  # removes tests/*.o
-make fclean # removes tests/*.o and the test_printf binary
-make re     # fclean + make, full rebuild of the test suite
 ```
 
 Every line is checked for:
