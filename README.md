@@ -1,6 +1,6 @@
-# 🖨️ ft_printf
+# ft_printf <img height="28" src="https://raw.githubusercontent.com/ayogun/42-project-badges/main/badges/ft_printfe.png" alt="ft_printf badge"/>
 
-![42](https://img.shields.io/badge/42-Born2beRoot-black?logo=42&logoColor=white)
+## <a href="https://profile.intra.42.fr/users/elmondo"><img align="middle" height="42" src="https://raw.githubusercontent.com/Elmond0/Elmond0/main/profile/icon42.svg" alt="42"/></a> &nbsp;Common Core Projects
 ![Norm](https://img.shields.io/badge/Norminette-passing-brightgreen)
 ![Language](https://img.shields.io/badge/language-C-blue)
 ![Makefile](https://img.shields.io/badge/build-Makefile-lightgrey)
