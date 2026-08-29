@@ -1,7 +1,4 @@
-<table border="0" cellspacing="0" cellpadding="0"><tr>
-<td><img height="100" src="https://raw.githubusercontent.com/ayogun/42-project-badges/main/badges/ft_printfe.png" alt="ft_printf badge"/></td>
-<td><h1>ft_printf</h1></td>
-</tr></table>
+# <img align="middle" height="45" src="https://raw.githubusercontent.com/ayogun/42-project-badges/main/badges/ft_printfe.png" alt="ft_printf badge"/> ft_printf
 
 ![Norm](https://img.shields.io/badge/Norminette-passing-brightgreen)
 ![Language](https://img.shields.io/badge/language-C-blue)
