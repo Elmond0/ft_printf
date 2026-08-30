@@ -40,18 +40,18 @@ The entire codebase strictly follows the **42 Norminette** — no more than 25 l
 | `%X`      | Prints an unsigned integer in uppercase hex      | `ft_printf("%X", 255);`           | `FF`                     |
 | `%%`      | Prints a literal percent sign                   | `ft_printf("%%");`                | `%`                      |
 
-Every conversion returns the **exact number of characters printed**, mirroring the real `printf`'s return contract — verified character-by-character against libc in the test suite below.
+Every conversion returns the **exact number of characters printed**, mirroring the real `printf`'s return contract.
 
 ---
 
 ## ⚙️ Compilation & Usage
 
-### Build the library
+### Step 1 — Build the library
 
-The project ships with a `Makefile` that compiles every source file with strict warnings and archives the result into a static library. It only builds the library — no test artifacts ever touch the project root.
+> **You must run `make` first.** The library (`libftprintf.a`) must exist before you can compile any program that uses `ft_printf`. Without this step the linker will not find the archive and compilation will fail.
 
 ```bash
-make        # compiles ft_printf.c and all helpers, builds libftprintf.a
+make        # compiles all .c files and archives them into libftprintf.a
 make clean  # removes all .o object files
 make fclean # removes .o files AND libftprintf.a
 make re     # fclean + make, full rebuild from scratch
@@ -59,65 +59,84 @@ make re     # fclean + make, full rebuild from scratch
 
 Under the hood, each `.c` file is compiled with `-Wall -Wextra -Werror` and archived with `ar rc`, producing a single linkable artifact: **`libftprintf.a`**.
 
-### Use it in your own project
+---
 
-Drop `ft_printf.h` and `libftprintf.a` next to your source, `#include` the header, and link against the archive at compile time.
+### Step 2 — Write your `main.c`
 
-**`main.c`**
+Copy and paste the file below as-is — it already includes the header, tests every supported specifier, and checks return values.
+
+**`main.c`** *(copy-paste ready)*
 ```c
 #include "ft_printf.h"
 
 int	main(void)
 {
-	int	len;
+	int		ret;
+	char	*null_str;
+	void	*null_ptr;
+	int		n;
 
-	len = ft_printf("Hello, %s! You are %d years old.\n", "42", 21);
-	ft_printf("Characters printed: %d\n", len);
+	null_str = NULL;
+	null_ptr = NULL;
+	n = 42;
+
+	/* %c — single character */
+	ret = ft_printf("%%c  -> [%c]\n", 'A');
+	ft_printf("       return: %d\n", ret);
+
+	/* %s — string, including NULL */
+	ret = ft_printf("%%s  -> [%s]\n", "hello 42");
+	ft_printf("       return: %d\n", ret);
+	ret = ft_printf("%%s  -> [%s]  (NULL string)\n", null_str);
+	ft_printf("       return: %d\n", ret);
+
+	/* %p — pointer, including NULL */
+	ret = ft_printf("%%p  -> [%p]\n", &n);
+	ft_printf("       return: %d\n", ret);
+	ret = ft_printf("%%p  -> [%p]  (NULL pointer)\n", null_ptr);
+	ft_printf("       return: %d\n", ret);
+
+	/* %d / %i — signed integers */
+	ret = ft_printf("%%d  -> [%d]\n", -2147483648);
+	ft_printf("       return: %d\n", ret);
+	ret = ft_printf("%%i  -> [%i]\n", 2147483647);
+	ft_printf("       return: %d\n", ret);
+
+	/* %u — unsigned integer */
+	ret = ft_printf("%%u  -> [%u]\n", 4294967295u);
+	ft_printf("       return: %d\n", ret);
+
+	/* %x / %X — hexadecimal */
+	ret = ft_printf("%%x  -> [%x]\n", 255);
+	ft_printf("       return: %d\n", ret);
+	ret = ft_printf("%%X  -> [%X]\n", 255);
+	ft_printf("       return: %d\n", ret);
+
+	/* %% — literal percent sign */
+	ret = ft_printf("%%%%  -> [%%]\n");
+	ft_printf("       return: %d\n", ret);
+
 	return (0);
 }
 ```
 
-**Compile & link:**
+---
+
+### Step 3 — Compile and run
+
+Place `main.c` in the **same directory** as `libftprintf.a` and `ft_printf.h`, then:
 
 ```bash
 gcc main.c -L. -lftprintf -o my_program
 ./my_program
 ```
 
-- `-L.` tells the linker to look for libraries in the current directory.
-- `-lftprintf` links against `libftprintf.a`.
+| Flag | Meaning |
+|------|---------|
+| `-L.` | tells the linker to look for libraries in the current directory (`.`) |
+| `-lftprintf` | links against `libftprintf.a` (the `lib` prefix and `.a` extension are implicit) |
 
----
-
-## 🧪 Testing
-
-Correctness was validated on two fronts: a **self-written differential test suite** comparing output and return values against the real `printf`, and a **community-maintained tester** for edge-case coverage.
-
-### 1. Differential testing against libc
-
-All test sources live in **[`tests/`](tests/)**, with their own dedicated `Makefile` — kept fully separate from the library so the project root stays clean and `ft_printf`'s own `Makefile` only ever builds `libftprintf.a`. The suite calls `ft_printf` and `printf` side by side on every conversion, and checks that both the **output** and the **return value** match exactly.
-
-```bash
-cd tests
-make run    # builds libftprintf.a (if needed), compiles the suite, and runs it
-```
-
-Every line is checked for:
-- ✅ Identical printed output
-- ✅ Identical return value (character count)
-- ✅ Correct handling of edge cases: `NULL` strings (`(null)`), `NULL` pointers (`(nil)`), `INT_MAX`, and `0`
-
-### 2. Community stress-testing
-
-For broader edge-case coverage (empty format strings, malformed inputs, extreme values), the project was additionally run against **[Tripouille's printfTester](https://github.com/Tripouille/printfTester)**, one of the most widely used community test suites for this project:
-
-```bash
-git clone https://github.com/Tripouille/printfTester.git
-cd printfTester
-# follow the tester's README to drop in ft_printf.c/.h and run its suite
-```
-
-> 💡 Other popular testers such as `ft_printf_tester` suites can be run the same way — clone, drop in the source files, and diff the output against libc.
+If `libftprintf.a` is in a different folder, replace `-L.` with `-L/path/to/folder`.
 
 ---
 
@@ -133,12 +152,6 @@ ft_printf/
 ├── ft_puthex.c              # %x / %X — hexadecimal
 ├── ft_putaddr.c             # %p — pointer addresses (NULL-safe)
 ├── ft_printf.h              # Public API + prototypes
-├── tests/                   # Differential test suite, fully self-contained
-│   ├── test_main.c
-│   ├── test_main.h
-│   ├── test_main_utils1.c
-│   ├── test_main_utils2.c
-│   └── Makefile             # Builds & runs the test suite (calls ../Makefile for the lib)
 └── Makefile                 # Build rules for libftprintf.a only
 ```
 
